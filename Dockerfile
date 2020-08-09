@@ -19,6 +19,8 @@ RUN wget ${URL}${VERSION}.zip \
 && apt-get update -y && apt-get install unzip wget -y --no-install-recommends \
 #unziping the package\
 && unzip ${VERSION}.zip -d /data/ \
+&& mv ${VERSION}/* /data/ \
+&& rmdir ${VERSION} \
 && rm ${VERSION}.zip \
 #accepting the eula\
 && touch eula.txt \
