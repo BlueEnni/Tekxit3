@@ -52,4 +52,4 @@ EXPOSE 25565/udp
 VOLUME "/data"
 
 # Entrypoint with java optimisations
-ENTRYPOINT /opt/java/openjdk/bin/java -jar -Xms$MEMORYSIZE -Xmx$MEMORYSIZE $JAVAFLAGS ./${JARFILE} --nojline nogui
+ENTRYPOINT /opt/java/openjdk/bin/java -jar -Xms$MEMORYSIZE -Xmx$MEMORYSIZE $JAVAFLAGS /data/${JARFILE} --nojline nogui
