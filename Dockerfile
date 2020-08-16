@@ -8,8 +8,9 @@ ARG version=0.981Tekxit3Server
 ENV URL=$url
 ENV VERSION=$version
 
-#adding the fixed extrautils2.cfg to the container
-COPY extrautils2.cfg ./
+#adding the fixed extrautils2.cfg and the entrypointscript to the container
+COPY extrautils2.cfg \
+entrypoint.sh ./
 #Downloading tekxitserver.zip
 RUN wget ${URL}${VERSION}.zip \
 #Downloading unzip\
@@ -31,8 +32,9 @@ RUN wget ${URL}${VERSION}.zip \
 && echo 'eula=true'>eula.txt
 
 FROM adoptopenjdk/openjdk8:alpine-slim AS runtime
-COPY --from=build /data /data
-RUN apk add --no-cache bash
+COPY --from=build /data /files
+RUN apk add --no-cache bash \
+&& chmod +x /files/entrypoint.sh
 WORKDIR /data
 
 ARG version=0.981Tekxit3Server
@@ -51,5 +53,5 @@ EXPOSE 25565/udp
 # Volumes for the external data (Server, World, Config...)
 VOLUME "/data"
 
-# Entrypoint with java optimisations
-ENTRYPOINT /opt/java/openjdk/bin/java -jar -Xms$MEMORYSIZE -Xmx$MEMORYSIZE $JAVAFLAGS /data/${JARFILE} --nojline nogui
+# Entrypoint script for container start
+ENTRYPOINT /files/entrypoint.sh
