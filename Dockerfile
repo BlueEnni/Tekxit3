@@ -20,11 +20,6 @@ RUN wget ${URL}${VERSION}.zip \
 && mv ${VERSION}/* /data/ \
 && rmdir ${VERSION} \
 && rm ${VERSION}.zip \
-#downloading the backupmod\
-&& wget https://media.forgecdn.net/files/2819/669/FTBBackups-1.1.0.1.jar \
-&& mv FTBBackups-1.1.0.1.jar /data/mods/ \
-&& wget https://media.forgecdn.net/files/2819/670/FTBBackups-1.1.0.1-sources.jar \
-&& mv FTBBackups-1.1.0.1-sources.jar /data/mods/ \
 #moving the fixed extrautils2.cfg into the configfolder\
 && mv extrautils2.cfg /data/config/ \
 #accepting the eula\
