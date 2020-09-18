@@ -8,9 +8,8 @@ ARG version=0.990Tekxit3Server
 ENV URL=$url
 ENV VERSION=$version
 
-#adding the fixed extrautils2.cfg and the entrypointscript to the container
-COPY extrautils2.cfg \
-entrypoint.sh ./
+#adding the fixed extrautils2.cfg to the container
+COPY extrautils2.cfg ./
 #Downloading tekxitserver.zip
 RUN wget ${URL}${VERSION}.zip \
 #Downloading unzip\
@@ -32,21 +31,18 @@ RUN wget ${URL}${VERSION}.zip \
 && echo 'eula=true'>eula.txt
 
 FROM adoptopenjdk/openjdk8:alpine-slim AS runtime
-COPY --from=build /data /files
-RUN apk add --no-cache bash \
-&& chmod +x /files/entrypoint.sh
+COPY --from=build /data /data
+RUN apk add --no-cache bash
 WORKDIR /data
 
 ARG version=0.981Tekxit3Server
 ARG jarfile=forge-1.12.2-14.23.5.2847-universal.jar
 ARG memory_size=4G
-ARG timezone=Europe/Berlin
 ARG java_flags="-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=mcflags.emc.gs -Dcom.mojang.eula.agree=true -Dfml.queryResult=confirm"
 ENV JAVAFLAGS=$java_flags
 ENV MEMORYSIZE=$memory_size
 ENV JARFILE=$jarfile
 ENV VERSION=$version
-ENV TIMEZONE=$timezone
 
 # Expose minecraft port
 EXPOSE 25565/tcp
@@ -55,5 +51,5 @@ EXPOSE 25565/udp
 # Volumes for the external data (Server, World, Config...)
 VOLUME "/data"
 
-# Entrypoint script for container start
-ENTRYPOINT /files/entrypoint.sh
+# Entrypoint with java optimisations
+ENTRYPOINT /opt/java/openjdk/bin/java -jar -Xms$MEMORYSIZE -Xmx$MEMORYSIZE $JAVAFLAGS /data/${JARFILE} --nojline nogui
