@@ -20,6 +20,9 @@ RUN wget ${URL}${VERSION}.zip \
 && mv ${VERSION}/* /data/ \
 && rmdir ${VERSION} \
 && rm ${VERSION}.zip \
+#downloading the Sampler mod for stall reports \
+&& wget https://media.forgecdn.net/files/2707/159/sampler-1.84.jar \
+&& mv sampler-1.84.jar /data/mods/ \
 #downloading the backupmod\
 && wget https://media.forgecdn.net/files/2819/669/FTBBackups-1.1.0.1.jar \
 && mv FTBBackups-1.1.0.1.jar /data/mods/ \
