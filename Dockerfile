@@ -32,7 +32,7 @@ RUN apk add --no-cache bash \
 && chmod +x /files/entrypoint.sh
 WORKDIR /data
 
-ARG version=0.981Tekxit3Server
+ARG version=0.990Tekxit3Server
 ARG jarfile=forge-1.12.2-14.23.5.2847-universal.jar
 ARG memory_size=4G
 ARG timezone=Europe/Berlin
