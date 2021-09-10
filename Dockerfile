@@ -3,7 +3,7 @@ MAINTAINER BlueEnni
 
 WORKDIR /data
 
-ARG url=https://www.tekxit.xyz/downloads/
+ARG url=https://tekxit.xyz/downloads/
 ARG version=0.990Tekxit3Server
 ENV URL=$url
 ENV VERSION=$version
