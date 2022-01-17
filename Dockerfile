@@ -4,7 +4,7 @@ MAINTAINER BlueEnni
 WORKDIR /data
 
 ARG url=https://tekxit.xyz/downloads/
-ARG version=1.0.3TekxitPiServer
+ARG version=1.0.4TekxitPiServer
 ENV URL=$url
 ENV VERSION=$version
 
@@ -37,7 +37,7 @@ RUN apk add --no-cache bash \
 && chmod +x /files/entrypoint.sh
 WORKDIR /data
 
-ENV VERSION=1.0.3TekxitPiServer
+ENV VERSION=1.0.4TekxitPiServer
 ENV JARFILE=forge-1.12.2-14.23.5.2854.jar
 ENV MEMORYSIZE=4G
 ENV TIMEZONE=Europe/Berlin
