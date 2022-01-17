@@ -4,13 +4,12 @@ MAINTAINER BlueEnni
 WORKDIR /data
 
 ARG url=https://tekxit.xyz/downloads/
-ARG version=0.990Tekxit3Server
+ARG version=1.0.4TekxitPiServer
 ENV URL=$url
 ENV VERSION=$version
 
-#adding the fixed extrautils2.cfg and the entrypointscript to the container
-COPY extrautils2.cfg \
-entrypoint.sh ./
+#adding the entrypointscript to the container
+COPY entrypoint.sh ./
 #Downloading tekxitserver.zip
 RUN wget ${URL}${VERSION}.zip \
 #Downloading unzip\
@@ -28,8 +27,6 @@ RUN wget ${URL}${VERSION}.zip \
 && mv FTBBackups-1.1.0.1.jar /data/mods/ \
 && wget https://media.forgecdn.net/files/2819/670/FTBBackups-1.1.0.1-sources.jar \
 && mv FTBBackups-1.1.0.1-sources.jar /data/mods/ \
-#moving the fixed extrautils2.cfg into the configfolder\
-&& mv extrautils2.cfg /data/config/ \
 #accepting the eula\
 && touch eula.txt \
 && echo 'eula=true'>eula.txt
@@ -40,16 +37,11 @@ RUN apk add --no-cache bash \
 && chmod +x /files/entrypoint.sh
 WORKDIR /data
 
-ARG version=0.990Tekxit3Server
-ARG jarfile=forge-1.12.2-14.23.5.2847-universal.jar
-ARG memory_size=4G
-ARG timezone=Europe/Berlin
-ARG java_flags="-Dfml.queryResult=confirm"
-ENV JAVAFLAGS=$java_flags
-ENV MEMORYSIZE=$memory_size
-ENV JARFILE=$jarfile
-ENV VERSION=$version
-ENV TIMEZONE=$timezone
+ENV VERSION=1.0.4TekxitPiServer
+ENV JARFILE=forge-1.12.2-14.23.5.2854.jar
+ENV MEMORYSIZE=4G
+ENV TIMEZONE=Europe/Berlin
+ENV JAVAFLAGS="-Dfml.queryResult=confirm"
 
 # Expose minecraft port
 EXPOSE 25565/tcp
